@@ -1,0 +1,28 @@
+using static System.Console;
+
+int n1, n2, n3, media;
+
+inicio: // define o bloco de código a ser repetido.
+WriteLine("Informe o valor do 1ª nota: ");
+n1 = Convert.ToInt16(ReadLine());
+
+WriteLine("Informe o valor do 2ª nota: ");
+n2 = Convert.ToInt16(ReadLine());
+
+WriteLine("Informe o valor do 3ª nota: ");
+n3 = Convert.ToInt16(ReadLine());
+
+media = (n1 + n2 + n3) / 3;
+WriteLine($"Média geral:{media}");
+
+Write("Deseja fazer um novo cálculo (S/N)");
+string resposta = ReadLine();
+
+if (resposta == "S" || resposta == "s") // Se o usuário digitar S
+{
+    goto inicio; // o programa retorna para a linha na qual está escrito inicio:
+}
+else
+{
+    ReadLine();
+}

@@ -1,0 +1,4 @@
+int a = 2;
+int b = 2;
+int soma = a + b;
+Console.WriteLine("A soma das variáveis A e B foi:" + soma);

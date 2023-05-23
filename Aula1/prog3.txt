@@ -1,0 +1,5 @@
+// See https://aka.ms/new-console-template for more information
+string nome = "Seu nome";
+int idade = 20;
+Console.WriteLine("Seu nome:" + nome + ", e sua idade é " + idade);
+Console.ReadKey();
