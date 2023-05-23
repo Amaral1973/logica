@@ -5,9 +5,8 @@ Arquivos das aulas dadas de Lógica de Programação, baseado em aplicações C#
 
 ## Aulas:alien:
 
-<a href="https://bit.ly/3IrcAV8">=>FlyoutPage</a><br/>
-<a href="https://bit.ly/3IrcAV8">=>RadioButton</a>
+<a href="https://bit.ly/3IrcAV8">Aula 1</a><br/>
 
 ## Links:alien:
 
-[Tutoriais do C#]([https://learn.microsoft.com/pt-br/xamarin/get-started/tutorials/])<br/>
+[Tutoriais do C#](https://learn.microsoft.com/pt-br/xamarin/get-started/tutorials/)<br/>
