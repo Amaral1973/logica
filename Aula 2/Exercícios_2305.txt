@@ -1,0 +1,155 @@
+Exercício 01 - 23/05
+
+using static System.Console;
+
+string nome;
+double n1, n2, n3, n4, media;
+
+WriteLine(">>>> APROVADO <<<<\n");
+WriteLine("Qual é o seu nome?");
+nome = ReadLine();
+WriteLine("Digite a 1º nota:");
+n1 = Convert.ToDouble(ReadLine());
+WriteLine("Digite a 2º nota:");
+n2 = Convert.ToDouble(ReadLine());
+WriteLine("Digite a 3º nota:");
+n3 = Convert.ToDouble(ReadLine());
+WriteLine("Digite a 4º nota:");
+n4 = Convert.ToDouble(ReadLine());
+media = (n1 + n2 + n3 + n4) / 4;
+if (media >= 6)
+{
+    WriteLine("Você foi APROVADO!!!");
+}
+else
+{
+    WriteLine("Você foi REPROVADO!!!");
+}
+
+Exercício 2
+
+using static System.Console;
+
+string nome;
+double n1, n2;
+
+WriteLine(">>>> MAIOR / MENOR <<<<\n");
+WriteLine("Qual é o seu nome?");
+nome = ReadLine();
+WriteLine("Digite o 1º número:");
+n1 = Convert.ToDouble(ReadLine());
+WriteLine("Digite o 2º número:");
+n2 = Convert.ToDouble(ReadLine());
+if (n1 > n2)
+{
+    WriteLine($"{nome}, o primeiro número {n1} é o maior!");
+}
+else if (n2 > n1)
+{
+    WriteLine($"{nome}, o segundo número {n2} é o maior!");
+}
+else
+{
+    WriteLine("Os números são iguais!!!");
+}
+
+Exercício 3
+
+using static System.Console;
+
+string nome;
+int n1;
+
+WriteLine(">>>> MÊS <<<<\n");
+WriteLine("Qual é o seu nome?");
+nome = ReadLine();
+WriteLine("Digite o um número (1-12):");
+n1 = Convert.ToInt32(ReadLine());
+switch (n1)
+{
+	case 1:
+		WriteLine($"{nome}, você digitou o número {n1}, é JANEIRO.");
+		break;
+    case 2:
+        WriteLine($"{nome}, você digitou o número {n1}, é FEVEREIRO.");
+        break;
+    case 3:
+        WriteLine($"{nome}, você digitou o número {n1}, é MARÇO.");
+        break;
+    case 4:
+        WriteLine($"{nome}, você digitou o número {n1}, é ABRIL.");
+        break;
+    case 5:
+        WriteLine($"{nome}, você digitou o número {n1}, é MAIO.");
+        break;
+    case 6:
+        WriteLine($"{nome}, você digitou o número {n1}, é JUNHO.");
+        break;
+    case 7:
+        WriteLine($"{nome}, você digitou o número {n1}, é JULHO.");
+        break;
+    case 8:
+        WriteLine($"{nome}, você digitou o número {n1}, é AGOSTO.");
+        break;
+    case 9:
+        WriteLine($"{nome}, você digitou o número {n1}, é SETEMBRO.");
+        break;
+    case 10:
+        WriteLine($"{nome}, você digitou o número {n1}, é OUTUBRO.");
+        break;
+    case 11:
+        WriteLine($"{nome}, você digitou o número {n1}, é NOVEMBRO.");
+        break;
+    case 12:
+        WriteLine($"{nome}, você digitou o número {n1}, é DEZEMBRO.");
+        break;
+    default:
+        WriteLine($"{nome}, não existe nenhum mês com este número?");
+        break;
+}
+
+Exercício 4
+
+using static System.Console;
+
+string nome;
+int codigo,quantidade;
+double pagar;
+
+WriteLine(">>>> LANCHONETE CHINGLING <<<<\n");
+WriteLine("Qual é o seu nome?");
+nome = ReadLine();
+WriteLine("Digite o código do produto:");
+codigo = Convert.ToInt32(ReadLine());
+WriteLine("Digite a quanditade:");
+quantidade = Convert.ToInt32(ReadLine());
+switch (codigo)
+{
+	case 100:
+        pagar = Math.Round(1.70 * quantidade, 2);
+		WriteLine($"{nome}, você escolheu o Cachorro Quente, e pediu {quantidade}, o total foi R$ {pagar}.");
+		break;
+    case 101:
+        pagar = Math.Round(2.30 * quantidade, 2);
+        WriteLine($"{nome}, você escolheu o Bauru Simples, e pediu {quantidade}, o total foi R$ {pagar}.");
+        break;
+    case 102:
+        pagar = Math.Round(2.60 * quantidade, 2);
+        WriteLine($"{nome}, você escolheu o Bauru com Ovo, e pediu {quantidade}, o total foi R$ {pagar}.");
+        break;
+    case 103:
+        pagar = Math.Round(2.40 * quantidade, 2);
+        WriteLine($"{nome}, você escolheu o Hamburguer, e pediu {quantidade}, o total foi R$ {pagar}.");
+        break;
+    case 104:
+        pagar = Math.Round(2.50 * quantidade, 2);
+        WriteLine($"{nome}, você escolheu o Cheeseburguer, e pediu {quantidade}, o total foi R$ {pagar}.");
+        break;
+    case 105:
+        pagar = Math.Round(1.00 * quantidade, 2);
+        WriteLine($"{nome}, você escolheu o Refrigerante, e pediu {quantidade}, o total foi R$ {pagar}.");
+        break;
+    default:
+        WriteLine($"{nome}, não existe nenhum mês com este número?");
+        break;
+}

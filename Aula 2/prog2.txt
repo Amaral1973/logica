@@ -1,0 +1,12 @@
+using static System.Console;
+
+int a = 3;
+if (a < 0)
+{
+    WriteLine($"O número {a} é positivo.");
+}
+else
+{
+    WriteLine($"O número {a} é negativo.");
+}
+ReadLine();
