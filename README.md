@@ -6,7 +6,7 @@ Arquivos das aulas dadas de Lógica de Programação, baseado em aplicações C#
 ## Aulas:alien:
 
 <a href="https://github.com/Amaral1973/logica/tree/main/Aula1">Aula 1</a><br/>
-<a href="https://github.com/Amaral1973/logica/tree/main/Aula1">Aula 2</a><br/>
+<a href="https://github.com/Amaral1973/logica/tree/main/Aula%202">Aula 2</a><br/>
 
 ## Links:alien:
 
