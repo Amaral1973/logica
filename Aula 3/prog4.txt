@@ -1,0 +1,6 @@
+int numero = 0;
+while (numero < 150)
+{
+    numero += 10;
+    Console.WriteLine("Valor de número é: " + numero);
+}

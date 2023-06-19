@@ -1,0 +1,5 @@
+string[] nomes = { "Cleber", "Carol", "Denis", "Roberto" }; 
+foreach (string pessoa in nomes) 
+{ 
+    Console.WriteLine("{0} ", pessoa); 
+}

@@ -1,0 +1,10 @@
+int n1 = 0;
+int n2 = 0;
+Console.WriteLine("Digite o número inicial:");
+n1 = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Digite o número final:");
+n2 = Convert.ToInt32(Console.ReadLine());
+for (int i = n1; i <= n2; i++)
+{
+    Console.WriteLine("Número: " + i);
+}

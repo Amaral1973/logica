@@ -1,0 +1,6 @@
+int contador = 2;
+while (contador != 10)
+{
+    Console.WriteLine(contador.ToString());
+    contador++;
+}
