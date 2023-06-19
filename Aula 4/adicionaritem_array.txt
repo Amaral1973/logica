@@ -1,0 +1,11 @@
+using static System.Console;
+
+string[] carros = { "Volvo", "Peugeot", "Nissan" };
+string novocarro = "Teste";
+List<string> novocarros = new List<string>(carros.ToList());
+novocarros.Add(novocarro);
+carros = novocarros.ToArray();
+foreach (var item in carros)
+{
+    WriteLine(item);
+}
