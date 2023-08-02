@@ -1,0 +1,21 @@
+<<< Resolução do Exercício >>>
+
+using static System.Console;
+
+namespace MyNamespace
+{
+    class CalcularIdade
+    {
+        public int calcular(int data)
+        {
+            return DateTime.Today.Year - data;
+        }
+        static void Main(string[] args)
+        {
+            CalcularIdade calc = new CalcularIdade();
+            WriteLine("Digite a data do seu nascimento");
+            int aniversario = Convert.ToInt32(ReadLine());
+            WriteLine("Sua idade é: {0}", calc.calcular(aniversario));
+        }
+    }
+}

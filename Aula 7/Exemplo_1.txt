@@ -1,0 +1,29 @@
+<<<Exemplo 1>>>
+using static System.Console;
+
+namespace MyNamespace
+{
+	class ManipuladorNumero
+	{
+		public int fatorial(int num)
+		{
+			int resultado;
+			if (num == 1)
+			{
+				return 1;
+			}
+			else
+			{
+				resultado = fatorial(num - 1) * num;
+				return resultado;
+			}
+		}
+		static void Main(string[] args)
+		{
+			ManipuladorNumero n = new ManipuladorNumero();
+			WriteLine("Digite um número inteiro");
+			int numero = Convert.ToInt32(ReadLine());
+			WriteLine("O fatorial do número digitado é: {0}",n.fatorial(numero));
+		}
+	}
+}

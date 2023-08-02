@@ -1,0 +1,21 @@
+<<<Exemplo 2>>>
+using static System.Console;
+
+namespace MyNamespace
+{
+	class Soma
+	{
+		static double soma(double n1, double n2)
+		{
+			return (n1 + n2);
+		}
+		static void Main(string[] args)
+		{
+			WriteLine("Digite o 1º número");
+			double n1 = Convert.ToDouble(ReadLine());
+            WriteLine("Digite o 2º número");
+            double n2 = Convert.ToDouble(ReadLine());
+            WriteLine("A soma dos números foi: {0}",soma(n1, n2));
+		}
+	}
+}
