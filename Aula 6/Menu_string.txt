@@ -1,0 +1,70 @@
+using System;
+
+namespace StringManipulation
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            bool showMenu = true;
+            while (showMenu)
+            {
+                showMenu = MainMenu();
+            }
+        }
+        private static bool MainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Escolha uma opção:");
+            Console.WriteLine("1) Palavra Inversa");
+            Console.WriteLine("2) Remover espaços em brancos");
+            Console.WriteLine("3) Sair");
+            Console.Write("\r\nSelecione uma opção: ");
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    ReverseString();
+                    return true;
+                case "2":
+                    RemoveWhitespace();
+                    return true;
+                case "3":
+                    return false;
+                default:
+                    return true;
+            }
+        }
+
+        private static string CaptureInput()
+        {
+            Console.Write("Entre com a palavra que você deseja modificar: ");
+            return Console.ReadLine();
+        }
+
+        private static void ReverseString()
+        {
+            Console.Clear();
+            Console.WriteLine("Palavra Inversa");
+
+            char[] charArray = CaptureInput().ToCharArray();
+            Array.Reverse(charArray);
+            DisplayResult(String.Concat(charArray));
+        }
+
+        private static void RemoveWhitespace()
+        {
+            Console.Clear();
+            Console.WriteLine("Remova Espaços em Branco");
+
+            DisplayResult(CaptureInput().Replace(" ", ""));
+        }
+
+        private static void DisplayResult(string message)
+        {
+            Console.WriteLine($"\r\nSua palavra modificada: {message}");
+            Console.Write("\r\nPressione ENTER para retornar ao menu");
+            Console.ReadLine();
+        }
+    }
+}

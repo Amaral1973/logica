@@ -1,0 +1,86 @@
+using System;
+using System.Collections.Generic;
+
+//interface IArte
+public interface IArte
+{
+    String Nome { get; set; }
+    String Descricao { get; set; }
+    void ExibiDados();
+}
+
+//classe Arte
+public class Arte : IArte
+{
+    public Arte()
+    {
+        this.Nome = "";
+        this.Descricao = "";
+    }
+
+    public Arte(string nome, string descricao)
+    {
+        this.Nome = nome;
+        this.Descricao = descricao;
+    }
+
+    private string nome;
+    public string Nome
+    {
+        get { return this.nome; }
+
+        set { this.nome = value.ToUpper(); }
+    }
+    private string descricao;
+    public string Descricao
+    {
+        get { return this.descricao; }
+
+        set { this.descricao = value.ToUpper(); }
+    }
+    public void ExibiDados()
+    {
+        //Console.WriteLine("Arte: " + this.Nome + " Descricao: " + this.Descricao);
+        Console.WriteLine("Arte: {0} - Descricao: {1}", this.Nome, this.Descricao);
+    }
+}
+
+//programa principal
+class Program
+{
+    static void Main(string[] args)
+    {
+        List<Arte> Artes = new List<Arte>();
+        int n = 0;
+        Arte arte;
+
+        Console.WriteLine("Controle de obras de arte");
+        Console.Write("Quantas obras você quer inserir: ");
+        n = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine("Iniciando o cadastro das obras de arte");
+        for (int i = 1; i <= n; i++)
+        {
+            Console.WriteLine("Leitura da Obra {0}", i);
+            arte = new Arte();
+            Console.Write("Nome: ");
+            arte.Nome = Console.ReadLine();
+            Console.Write("Descricao: ");
+            arte.Descricao = Console.ReadLine();
+            Artes.Add(arte);
+        }
+
+        Console.WriteLine("Lista das obras de arte cadastradas");
+        //for (int i = 0; i < n; i++)
+        //{
+        //    Artes[i].ExibiDados();
+        //}
+
+        foreach (var item in Artes)
+        {
+            item.ExibiDados();
+        }
+
+        Console.ReadKey();
+    }
+}

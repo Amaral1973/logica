@@ -1,0 +1,148 @@
+using System;
+using static System.Console;
+
+namespace App2710
+{
+	class MainClass
+	{
+		public static void printMenu(String[] options)
+		{
+			foreach (String option in options)
+			{
+				WriteLine(option);
+			}
+			WriteLine("Escolha a sua opção:");
+		}
+
+		public static void Main(String[] args)
+		{
+			WriteLine(">>>> CADASTRO DE PESSOAS <<<<");
+			String[] options = {"1 - Cadastrar",
+								"2 - Editar",
+								"3 - Excluir",
+								"4 - Listar", 
+								"5 - Sair"};
+			int option = 0;
+			while (true)
+			{
+				printMenu(options);
+				try
+				{
+					option = Convert.ToInt32(ReadLine());
+				}
+				catch (System.FormatException)
+				{
+					WriteLine("Por favor, digite uma opção entre 1 e " + options.Length);
+					continue;
+				}
+				catch (Exception)
+				{
+					WriteLine("Um erro aconteceu! Tente novamente!");
+					continue;
+				}
+				switch (option)
+				{
+					case 1:
+						Cadastrar();
+						break;
+					case 2:
+						Editar();
+						break;
+					case 3:
+						Excluir();
+						break;
+                    case 4:
+                        Listar();
+                        break;
+                    case 5:
+						Environment.Exit(0);
+						break;
+					default:
+						WriteLine("Por favor, digite uma opção entre 1 e " + options.Length);
+						break;
+				}
+			}
+		}
+
+		static List<string> nomes = new List<string>();
+        static List<int> idades = new List<int>();
+
+        private static void Cadastrar()
+		{
+            Clear();
+			WriteLine(">>>> Cadastro de Pessoa <<<<");
+			WriteLine();
+			WriteLine("Digite o nome da pessoa");
+			nomes.Add(ReadLine());
+			WriteLine("Digite a sua idade");
+			idades.Add(Convert.ToInt32(ReadLine()));
+			WriteLine();
+		}
+
+		private static void Editar()
+		{
+            Clear();
+            WriteLine(">>>> Edição de Pessoa <<<<");
+            string nome = "";
+            WriteLine("Digite o nome que você deseja editar:");
+            nome = ReadLine();
+            int index = nomes.IndexOf(nome);
+            if (index >= 0)
+            {
+                WriteLine(">>>> Registro que será editado <<<<");
+                WriteLine($"Nome: {nomes[index]}");
+                WriteLine($"Idade: {idades[index]}");
+                WriteLine();
+				WriteLine("Digite um novo nome");
+                nomes[index] = ReadLine();
+				WriteLine("Digite uma nova idade");
+                idades[index] = Convert.ToInt32(ReadLine());
+				WriteLine();
+                WriteLine("Registro atualizado com sucesso!!!");
+            }
+            else
+            {
+                WriteLine("Registro não encontrado!!!");
+            }
+            WriteLine();
+        }
+
+        private static void Excluir()
+        {
+			Clear();
+            WriteLine(">>>> Exclusão de Pessoa <<<<");
+            string nome = "";
+            WriteLine("Digite o nome que você deseja excluir:");
+			nome = ReadLine();
+			int index = nomes.IndexOf(nome);
+			if (index >= 0)
+			{
+				WriteLine(">>>> Registro que será removido <<<<");
+				WriteLine($"Nome: {nomes[index]}");
+				WriteLine($"Idade: {idades[index]}");
+				WriteLine();
+				nomes.RemoveAt(index);
+				idades.RemoveAt(index);
+				WriteLine("Registro removido com sucesso!!!");
+			}
+			else
+			{
+				WriteLine("Registro não encontrado!!!");
+			}
+			WriteLine();
+        }
+
+        private static void Listar()
+        {
+			WriteLine();
+			WriteLine(">>>> Listagem de Pessoas <<<<");
+			int pos = 0;
+			foreach (var item in nomes)
+			{
+				WriteLine($"Nome: {item}, idade: {idades[pos]}");
+				pos++;
+			}
+			WriteLine();
+        }
+    }
+}
