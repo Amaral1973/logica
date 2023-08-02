@@ -1,0 +1,695 @@
+﻿using System;
+using System.Diagnostics;
+using static System.Console;
+using System.Text;
+using System.IO;
+using Microsoft.VisualBasic.FileIO;
+using System.Xml;
+
+namespace TrabalhodoTiozão
+{
+    class Turma
+    {
+
+        public static void printMenu(string[] options)
+        {
+            WriteLine("==============================");
+            foreach (string option in options)
+            {
+                WriteLine(option);
+            }
+            WriteLine("Escolha a sua opção");
+            WriteLine("==============================");
+        }
+        public static void Main(string[] args)
+        {
+            WriteLine("==============================");
+            WriteLine("=         TURMA TDS          =");
+            WriteLine("==============================");
+            string[] options = {"1 - Cadastrar Aluno", "2 - Editar Aluno",
+                                "3 - Excluir Aluno", "4 - Listar Alunos",
+                                "5 - Listar Aprovados", "6 - Listar 'Em Recuperação'",
+                                "7 - Listar Reprovados", "8 - Procurar Aluno",
+                                "9 - Ler Dados Salvos", "10 - Salvar",
+                                "11 - Sair" };
+            int option = 0;
+            while (true)
+            {
+                printMenu(options);
+                try
+                {
+                    option = Convert.ToInt32(ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    WriteLine("Por favor, digite uma opção entre 1 e " + options.Length);
+                    continue;
+                }
+                catch (Exception)
+                {
+                    WriteLine("Um erro aconteceu!! Tente novamente");
+                    continue;
+                }
+                switch (option)
+                {
+
+                    case 1:
+                        Cadastrar();
+                        break;
+                    case 2:
+                        Editar();
+                        break;
+                    case 3:
+                        Excluir();
+                        break;
+                    case 4:
+                        Listar();
+                        break;
+                    case 5:
+                        ListarAprovados();
+                        break;
+                    case 6:
+                        ListarRecuperacao();
+                        break;
+                    case 7:
+                        ListarReprovados();
+                        break;
+                    case 8:
+                        Buscar();
+                        break;
+                    case 9:
+                        Ler();
+                        break;
+                    case 10:
+                        Gravar();
+                        break;
+                    case 11:
+                        Environment.Exit(0);
+                        ReadKey();
+                        break;
+                    default:
+                        WriteLine("Por favor, Digite uma opção entre 1 e " + options.Length);
+                        break;
+                }
+            }
+        }
+
+        static List<string> alunos = new List<string>();
+        static List<double> notas1 = new List<double>();
+        static List<double> notas2 = new List<double>();
+        static List<double> notas3 = new List<double>();
+        static List<double> notas4 = new List<double>();
+        static List<double> mediaAlunos = new List<double>();
+        static public int qtdAprovados { get; set; }
+        static public int qtdRecuperacao { get; set; }
+        static public int qtdReprovados { get; set; }
+
+        private static void Cadastrar()
+        {
+            Clear();
+            WriteLine("=====================================");
+            WriteLine("=        CADASTRO DE ALUNO          =");
+            WriteLine("=====================================");
+            WriteLine();
+            WriteLine("Digite o nome do Aluno:");
+            string nome = ReadLine();
+            var repetido = alunos.Any(x => x.Contains(nome));
+            if (repetido == true)
+            {
+                WriteLine("Aluno já cadastrado, Refaça a operação\n");
+                return;
+            }
+            else
+            {
+                alunos.Add(nome);
+
+            }
+            WriteLine("Digite a 1ª nota do aluno");
+            try
+            {
+                notas1.Add(Convert.ToDouble(ReadLine()));
+            }
+            catch (System.FormatException)
+            {
+                WriteLine("Erro de digitação, por favor refaça a operação");
+                return;
+            }
+            catch (Exception)
+            {
+                WriteLine("Um erro aconteceu!! Tente novamente");
+                return;
+            }
+            WriteLine();
+            WriteLine("Digite a 2ª nota do aluno");
+            try
+            {
+                notas2.Add(Convert.ToDouble(ReadLine()));
+            }
+            catch (System.FormatException)
+            {
+                WriteLine("Erro de digitação, por favor refaça a operação");
+                return;
+            }
+            catch (Exception)
+            {
+                WriteLine("Um erro aconteceu!! Tente novamente");
+                return;
+            }
+            WriteLine();
+            WriteLine("Digite a 3ª nota do aluno");
+            try
+            {
+                notas3.Add(Convert.ToDouble(ReadLine()));
+            }
+            catch (System.FormatException)
+            {
+                WriteLine("Erro de digitação, por favor refaça a operação");
+                return;
+            }
+            catch (Exception)
+            {
+                WriteLine("Um erro aconteceu!! Tente novamente");
+                return;
+            }
+            WriteLine();
+            WriteLine("Digite a 4ª nota do aluno");
+            try
+            {
+                notas4.Add(Convert.ToDouble(ReadLine()));
+            }
+            catch (System.FormatException)
+            {
+                WriteLine("Erro de digitação, por favor refaça a operação");
+                return;
+            }
+            catch (Exception)
+            {
+                WriteLine("Um erro aconteceu!! Tente novamente");
+                return;
+            }
+            int i = alunos.Count - 1;
+            double med = (notas1[i] + notas2[i] + notas3[i] + notas4[i]) / 4;
+            mediaAlunos.Add(med);
+            
+        }
+        private static void Situacao()
+        {
+            List<string> alunosAprovados = new List<string>();
+            List<string> alunosRecuperacao = new List<string>();
+            List<string> alunosReprovados = new List<string>();
+            int i = 0;
+            foreach (var item in mediaAlunos)
+            {
+                if (item >= 7)
+                {
+                    alunosAprovados.Add(alunos[i]);
+                }
+                else if (item < 7 && item >= 5)
+                {
+                    alunosRecuperacao.Add(alunos[i]);
+                }
+                else
+                {
+                    alunosReprovados.Add(alunos[i]);
+                }
+                i++;
+            }
+
+            qtdAprovados = alunosAprovados.Count;
+            qtdRecuperacao = alunosRecuperacao.Count;
+            qtdReprovados = alunosReprovados.Count;
+        }
+        private static void Listar()
+        {
+            Situacao();
+            Clear();
+            var mediaSala = (notas1.Average()+notas2.Average()+notas3.Average()+notas4.Average())/4;
+            WriteLine();
+            WriteLine("=====================================");
+            WriteLine("=         LISTAGEM DE ALUNOS        =");
+            WriteLine("=====================================");
+            WriteLine($"      MEDIA DA CLASSE: {mediaSala.ToString("F")}");
+            WriteLine($"      APROVADOS: {qtdAprovados}");
+            WriteLine($"      EM RECUPERAÇÃO: {qtdRecuperacao}");
+            WriteLine($"      REPROVADOS: {qtdReprovados}");
+            WriteLine("=====================================");
+            WriteLine();
+            int pos = 0;
+            foreach (var item in alunos)
+            {
+                WriteLine($"Nome: {item} | 1ª Nota:{notas1[pos]} | 2ª Nota:{notas2[pos]} | 3ª Nota:{notas3[pos]} | 4ª Nota:{notas4[pos]} | Média:{mediaAlunos[pos]}");
+                pos++;
+            }
+            WriteLine();
+        }
+        private static void ListarAprovados()
+        {
+            Situacao();
+            Clear();
+            ForegroundColor = ConsoleColor.Green;
+            WriteLine();
+            WriteLine("=====================================");
+            WriteLine("=   LISTAGEM DE ALUNOS APROVADOS    =");
+            WriteLine("=====================================");
+            WriteLine($"           APROVADOS: {qtdAprovados}");
+            WriteLine("=====================================");
+            WriteLine();
+            ResetColor();
+            foreach (var item in mediaAlunos)
+            {
+
+                int index = mediaAlunos.IndexOf(item);
+                if (item>=7)
+                {
+                    if (index >= 0)
+                    {
+                        WriteLine($"Nome: {alunos[index]}");
+                        WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{item}");
+                    }
+                    else
+                    {
+                        ForegroundColor = ConsoleColor.Red;
+                        WriteLine("===================================");
+                        WriteLine("=    REGISTRO NÃO ENCONTRADO!!!   =");
+                        WriteLine("===================================");
+                        ResetColor();
+
+                    }
+                }
+            }
+
+        }
+
+        private static void ListarRecuperacao()
+        {
+            Situacao();
+            Clear();
+            ForegroundColor = ConsoleColor.DarkYellow;
+            WriteLine();
+            WriteLine("=====================================");
+            WriteLine("= LISTAGEM DE ALUNOS DE RECUPERAÇÃO =");
+            WriteLine("=====================================");
+            WriteLine($"          EM RECUPERAÇÃO: {qtdRecuperacao}");
+            WriteLine("=====================================");
+            ResetColor();
+            foreach (var item in mediaAlunos)
+            {
+                int index = mediaAlunos.IndexOf(item);
+                if (item<7 && item>=5)
+                {
+                    if (index >= 0)
+                    {
+                        WriteLine($"Nome: {alunos[index]}");
+                        WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{item}");
+                    }
+                    else
+                    {
+                        ForegroundColor = ConsoleColor.Red;
+                        WriteLine("===================================");
+                        WriteLine("=    REGISTRO NÃO ENCONTRADO!!!   =");
+                        WriteLine("===================================");
+                        ResetColor();
+                    }
+                }
+
+            }
+
+        }
+        private static void ListarReprovados()
+        {
+            Situacao();
+            Clear();
+            ForegroundColor = ConsoleColor.Red;
+            WriteLine();
+            WriteLine("=====================================");
+            WriteLine("=   LISTAGEM DE ALUNOS REPROVADOS   =");
+            WriteLine("=====================================");
+            WriteLine($"           REPROVADOS: {qtdReprovados}");
+            WriteLine("=====================================");
+            ResetColor();
+            foreach (var item in mediaAlunos)
+            {
+                int index = mediaAlunos.IndexOf(item);
+                if (item<5)
+                {
+                    if (index >= 0)
+                    {
+                        WriteLine($"Nome: {alunos[index]}");
+                        WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{item}");
+                    }
+                    else
+                    {
+                        ForegroundColor = ConsoleColor.Red;
+                        WriteLine("===================================");
+                        WriteLine("=    REGISTRO NÃO ENCONTRADO!!!   =");
+                        WriteLine("===================================");
+                        ResetColor();
+
+                    }
+                }
+
+            }
+        }
+        private static void Editar()
+        {
+            Clear();
+            ForegroundColor = ConsoleColor.Magenta;
+            WriteLine("=================================");
+            WriteLine("=       EDIÇÃO DE ALUNO         =");
+            WriteLine("=================================");
+            WriteLine();
+            ResetColor();
+            string nome = "";
+            WriteLine("Digite um nome que você deseja editar: ");
+            nome = ReadLine();
+            int index = alunos.IndexOf(nome);
+            if (index >= 0)
+            {
+                WriteLine("==================================");
+                WriteLine("=   REGISTRO QUE SERÁ EDITADO    =");
+                WriteLine("==================================");
+                WriteLine();
+                WriteLine($"Nome: {alunos[index]}");
+                WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{mediaAlunos[index]}");
+                WriteLine();
+                WriteLine("Reescreva o nome:");
+                string novonome = ReadLine();
+                var repetido = alunos.Any(x => x.Contains(novonome));
+                if (repetido == true)
+                {
+                    WriteLine("Nome já cadastrado, Refaça a operação\n");
+                    return;
+                }
+                else
+                {
+                    alunos[index] = novonome;
+
+                }
+                WriteLine("Reescreva a 1ª Nota:");
+                try
+                {
+                    notas1[index] = Convert.ToDouble(ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    WriteLine("Erro de digitação, por favor refaça a operação");
+                    return;
+                }
+                catch (Exception)
+                {
+                    WriteLine("Um erro aconteceu!! Tente novamente");
+                    return;
+                }
+                WriteLine();
+                WriteLine("Reescreva a 2ª nota do aluno");
+                try
+                {
+                    notas2[index] = Convert.ToDouble(ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    WriteLine("Erro de digitação, por favor refaça a operação");
+                    return;
+                }
+                catch (Exception)
+                {
+                    WriteLine("Um erro aconteceu!! Tente novamente");
+                    return;
+                }
+                WriteLine();
+                WriteLine("Reescreva a 3ª nota do aluno");
+                try
+                {
+                    notas3[index] = Convert.ToDouble(ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    WriteLine("Erro de digitação, por favor refaça a operação");
+                    return;
+                }
+                catch (Exception)
+                {
+                    WriteLine("Um erro aconteceu!! Tente novamente");
+                    return;
+                }
+                WriteLine();
+                WriteLine("Reescreva a 4ª nota do aluno");
+                try
+                {
+                    notas4[index] = Convert.ToDouble(ReadLine());
+                }
+                catch (System.FormatException)
+                {
+                    WriteLine("Erro de digitação, por favor refaça a operação");
+                    return;
+                }
+                catch (Exception)
+                {
+                    WriteLine("Um erro aconteceu!! Tente novamente");
+                    return;
+                }
+                mediaAlunos[index] = (notas1[index] + notas2[index] + notas3[index] + notas4[index]) / 4;
+                WriteLine();
+                WriteLine("==================================");
+                WriteLine("= Registro editada com sucesso!! =");
+                WriteLine("==================================");
+            }
+            else
+            {
+                ForegroundColor = ConsoleColor.Red;
+                WriteLine("==================================");
+                WriteLine("=   REGISTRO NÃO ENCONTRADO!!!   =");
+                WriteLine("==================================");
+                ResetColor();
+            }
+
+        }
+        private static void Buscar()
+        {
+            Clear();
+            ForegroundColor = ConsoleColor.Green;
+            WriteLine("==================================");
+            WriteLine("=        BUSCA DE ALUNO          =");
+            WriteLine("==================================");
+            WriteLine();
+            ResetColor();
+            string nome = "";
+            WriteLine("Digite o nome do aluno que deseja buscar:");
+            nome = ReadLine();
+            Clear();
+            int index = alunos.IndexOf(nome);
+            if (index >= 0)
+            {
+                WriteLine("==================================");
+                WriteLine("=        BUSCA DE ALUNO          =");
+                WriteLine("==================================");
+                WriteLine($"Nome: {alunos[index]}");
+                WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{mediaAlunos[index]}");
+                if (mediaAlunos[index] >= 7)
+                {
+                    WriteLine("Aluno Aprovado!!");
+                }
+                else if (mediaAlunos[index] < 7 && mediaAlunos[index] >= 5)
+                {
+                    WriteLine("Aluno Em recuperação");
+                }
+                else
+                {
+                    WriteLine("Aluno Reprovado");
+                }
+
+            }
+            else
+            {
+                ForegroundColor = ConsoleColor.Red;
+                WriteLine("===================================");
+                WriteLine("=    REGISTRO NÃO ENCONTRADO!!!   =");
+                WriteLine("===================================");
+                ResetColor();
+            }
+        }
+        private static void Excluir()
+        {
+            {
+                Clear();
+                ForegroundColor = ConsoleColor.Red;
+                WriteLine("==================================");
+                WriteLine("=       EXCLUSÃO DE ALUNO        =");
+                WriteLine("==================================");
+                WriteLine();
+                ResetColor();
+                string nome = "";
+                WriteLine("Digite o nome do aluno que você deseja excluir: ");
+                nome = ReadLine();
+                int index = alunos.IndexOf(nome);
+                string confirma = "";
+                if (index >= 0)
+                {
+                    WriteLine("==================================");
+                    WriteLine("=   REGISTRO QUE SERÁ EXCLUIDO   =");
+                    WriteLine("==================================");
+                    WriteLine($"Nome: {alunos[index]}");
+                    WriteLine($"1ª Nota:{notas1[index]} | 2ª Nota:{notas2[index]} | 3ª Nota:{notas3[index]} | 4ª Nota:{notas4[index]}| Média:{mediaAlunos[index]}");
+                    WriteLine();
+                    WriteLine("Confirmar operação de exclusão? DIGITE 'sim' ou 'não':");
+                    confirma = ReadLine();
+                    if (confirma == "sim")
+                    {
+                        alunos.RemoveAt(index);
+                        notas1.RemoveAt(index);
+                        notas2.RemoveAt(index);
+                        notas3.RemoveAt(index);
+                        notas4.RemoveAt(index);
+                        mediaAlunos.RemoveAt(index);
+                        WriteLine();
+                        ForegroundColor = ConsoleColor.Green;
+                        WriteLine("===================================");
+                        WriteLine("= REGISTRO EXCLUÍDO COM SUCESSO!! =");
+                        WriteLine("===================================");
+                        ResetColor();
+                    }
+                    else
+                    {
+                        ForegroundColor = ConsoleColor.Green;
+                        WriteLine("==================================");
+                        WriteLine("=      OPERAÇÃO CANCELADA        =");
+                        WriteLine("==================================");
+                        ResetColor();
+                    }
+
+                }
+                else
+                {
+                    ForegroundColor = ConsoleColor.Red;
+                    WriteLine("===================================");
+                    WriteLine("=    REGISTRO NÃO ENCONTRADO!!!   =");
+                    WriteLine("===================================");
+                    ResetColor();
+                }
+
+            }
+        }
+
+        private static void Gravar()
+        {
+            Clear();
+            WriteLine();
+            WriteLine("===================================");
+            WriteLine("=         GRAVANDO DADOS          =");
+            WriteLine("===================================");
+            try
+            {
+                StreamWriter dadosAlunos;
+                string arq = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\Alunos.txt";
+                dadosAlunos = File.CreateText(arq);
+                foreach (var item in alunos)
+                {
+                    dadosAlunos.WriteLine($"{item}");
+                }
+                dadosAlunos.Close();
+                StreamWriter dadosNotas1;
+                string arq2 = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas1.txt";
+                dadosNotas1 = File.CreateText(arq2);
+                foreach (var item2 in notas1)
+                {
+                    dadosNotas1.WriteLine($"{item2}");
+                }
+                dadosNotas1.Close();
+
+                StreamWriter dadosNotas2;
+                string arq3 = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas2.txt";
+                dadosNotas2 = File.CreateText(arq3);
+                foreach (var item3 in notas2)
+                {
+                    dadosNotas2.WriteLine($"{item3}");
+                }
+                dadosNotas2.Close();
+
+                StreamWriter dadosNotas3;
+                string arq4 = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas3.txt";
+                dadosNotas3 = File.CreateText(arq4);
+                foreach (var item4 in notas3)
+                {
+                    dadosNotas3.WriteLine($"{item4}");
+                }
+                dadosNotas3.Close();
+
+                StreamWriter dadosNotas4;
+                string arq5 = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas4.txt";
+                dadosNotas4 = File.CreateText(arq5);
+                foreach (var item5 in notas4)
+                {
+                    dadosNotas4.WriteLine($"{item5}");
+                }
+                dadosNotas4.Close();
+                StreamWriter dadosMediaAlunos;
+                string arq6 = @"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\mediaalunos.txt";
+                dadosMediaAlunos = File.CreateText(arq6);
+                foreach (var item6 in mediaAlunos)
+                {
+                    dadosMediaAlunos.WriteLine($"{item6}");
+                }
+                WriteLine();
+                dadosMediaAlunos.Close();
+            }
+            catch (Exception e)
+            {
+                WriteLine("Erro: " + e.Message);
+
+            }
+            finally
+            {
+                ForegroundColor = ConsoleColor.Green;
+                WriteLine("===================================");
+                WriteLine("=   Dados gravados com sucesso!!  =");
+                WriteLine("===================================");
+                ResetColor();
+            }
+        }
+
+        private static void Ler()
+        {
+            Clear();
+            WriteLine("===================================");
+            WriteLine("=         LENDO ARQUIVOS          =");
+            WriteLine("===================================");
+            WriteLine();
+
+            var nome = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\Alunos.txt");
+            for (int i = 0; i < nome.Length; i++)
+            {
+                alunos.Add(nome[i]);
+            }
+            var nota1 = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas1.txt");
+            for (int x = 0; x < nota1.Length; x++)
+            {
+                notas1.Add(Convert.ToDouble(nota1[x]));
+            }
+            var nota2 = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas2.txt");
+            for (int q = 0; q < nota2.Length; q++)
+            {
+                notas2.Add(Convert.ToDouble(nota2[q]));
+            }
+            var nota3 = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas3.txt");
+            for (int w = 0; w < nota3.Length; w++)
+            {
+                notas3.Add(Convert.ToDouble(nota3[w]));
+            }
+            var nota4 = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\notas4.txt");
+            for (int e = 0; e < nota4.Length; e++)
+            {
+                notas4.Add(Convert.ToDouble(nota4[e]));
+            }
+            var media = File.ReadAllLines(@"C:\Users\emerson6560\Desktop\Trabalhos\Trabalhos TDS10\Pietro\trabalhodotiozao2.0\mediaalunos.txt");
+            for (int r = 0; r < media.Length; r++)
+            {
+                mediaAlunos.Add(Convert.ToDouble(media[r]));
+            }
+            ForegroundColor = ConsoleColor.Green;
+            WriteLine("===================================");
+            WriteLine("=  Leitura de dados concluida!!   =");
+            WriteLine("===================================");
+            ResetColor();
+        }
+    }
+}
